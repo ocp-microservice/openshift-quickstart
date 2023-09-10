@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Service
+metadata:  
+  labels:
+    app: openshift-quickstart
+  name: openshift-quickstart
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: openshift-quickstart
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:  
+  labels:
+    app: openshift-quickstart
+  name: openshift-quickstart
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openshift-quickstart
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: openshift-quickstart
+    spec:
+      containers:
+      - image: quay.io/shani1/openshift-quickstart:1.0
+        name: openshift-quickstart
+        resources: {}
+status: {}
